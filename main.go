@@ -4,10 +4,14 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/ichbinnichts/events-api/db"
 	"github.com/ichbinnichts/events-api/models"
 )
 
 func main() {
+
+	db.InitDB()
+
 	server := gin.Default()
 
 	server.GET("/", getHome)
