@@ -4,10 +4,14 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/ichbinnichts/events-api/db"
 	"github.com/ichbinnichts/events-api/models"
 )
 
 func main() {
+
+	db.InitDB()
+
 	server := gin.Default()
 
 	server.GET("/", getHome)
@@ -24,7 +28,12 @@ func getHome(context *gin.Context) {
 }
 
 func getEvents(context *gin.Context) {
-	events := models.GetAllEvents()
+	events, err := models.GetAllEvents()
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not get events.", "error": err})
+		return
+	}
 	context.JSON(http.StatusOK, events)
 }
 
@@ -33,14 +42,18 @@ func createEvent(context *gin.Context) {
 	err := context.ShouldBindJSON(&event)
 
 	if err != nil {
-		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse request data."})
+		context.JSON(http.StatusBadRequest, gin.H{"message": "Could not parse request data.", "error": err})
 		return
 	}
 
 	event.UserId = 1
 	event.ID = 1
 
-	event.Save()
+	err = event.Save()
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"message": "Could not save event.", "error": err})
+	}
 
 	context.JSON(http.StatusCreated, gin.H{"message": "Event created", "event": event})
 }
