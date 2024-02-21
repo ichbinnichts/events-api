@@ -20,7 +20,7 @@ func InitDB() {
 		host     = "localhost"
 		port     = 5432
 		user     = "postgres"
-		password = "postgres"
+		password = "1234"
 		dbname   = "godev"
 	)
 

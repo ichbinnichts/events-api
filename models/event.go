@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/ichbinnichts/events-api/db"
@@ -18,29 +19,46 @@ type Event struct {
 var events = []Event{}
 
 func (e *Event) Save() error {
-	query := `INSERT INTO events (name, description, location, dateTime, user_id)
-		VALUES(?, ?, ?, ?, ?)`
+	query := `INSERT INTO events(name, description, location, datetime, user_id) VALUES($1, $2, $3, $4, $5) RETURNING id`
 
-	preperaStatement, err := db.DB.Prepare(query)
-
+	prepareStatement, err := db.DB.Prepare(query)
 	if err != nil {
+		fmt.Println("Prepare error:", err)
 		return err
 	}
+	defer prepareStatement.Close()
 
-	defer preperaStatement.Close()
-
-	result, err := preperaStatement.Exec(e.Name, e.Description, e.Location, e.DateTime, e.UserId)
-
+	err = prepareStatement.QueryRow(e.Name, e.Description, e.Location, e.DateTime, e.UserId).Scan(&e.ID)
 	if err != nil {
+		fmt.Println("Exec error:", err)
 		return err
 	}
-
-	id, err := result.LastInsertId()
-
-	e.ID = id
-	return err
+	return nil
 }
 
-func GetAllEvents() []Event {
-	return events
+func GetAllEvents() ([]Event, error) {
+	query := `SELECT * FROM events`
+	rows, err := db.DB.Query(query)
+
+	if err != nil {
+		return nil, err
+	}
+
+	defer rows.Close()
+
+	var events []Event
+
+	for rows.Next() {
+		var event Event
+		err := rows.Scan(&event.ID, &event.Name, &event.Description, &event.Location, &event.DateTime, &event.UserId)
+
+		if err != nil {
+			return nil, err
+		}
+
+		events = append(events, event)
+	}
+
+	return events, nil
+
 }

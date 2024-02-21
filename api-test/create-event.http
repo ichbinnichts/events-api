@@ -5,5 +5,5 @@ Content-Type: application/json
     "name":"Nathan Teste",
     "description" : "Teste teste",
     "location": "test location",
-    "dateTime": "2024-01-01T15:39:00.000Z"
+    "datetime": "2024-01-01T15:39:00.000Z"
 }
