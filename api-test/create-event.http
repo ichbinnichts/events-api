@@ -1,5 +1,6 @@
 POST http://localhost:8080/events
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdGhhbnRlc3RAZW1haWwuY29tIiwiZXhwIjoxNzA4NjI2NjcyLCJ1c2VySWQiOjB9.NrF3HfKry2U92WvLAl2NPPGnLZL_OPpdgSduGO7OFu8
 
 {
     "name":"Nathan Teste 2",
