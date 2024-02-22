@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/ichbinnichts/events-api/db"
@@ -23,14 +22,12 @@ func (e *Event) Save() error {
 
 	prepareStatement, err := db.DB.Prepare(query)
 	if err != nil {
-		fmt.Println("Prepare error:", err)
 		return err
 	}
 	defer prepareStatement.Close()
 
 	err = prepareStatement.QueryRow(e.Name, e.Description, e.Location, e.DateTime, e.UserId).Scan(&e.ID)
 	if err != nil {
-		fmt.Println("Exec error:", err)
 		return err
 	}
 	return nil

@@ -51,7 +51,7 @@ func createTables() {
 		CREATE TABLE IF NOT EXISTS users (
 			id SERIAL PRIMARY KEY,
 			email TEXT NOT NULL UNIQUE,
-			password TEXT NOT NULL,
+			password TEXT NOT NULL
 		)
 	`
 
@@ -68,7 +68,8 @@ func createTables() {
 			description TEXT NOT NULL,
 			location TEXT NOT NULL,
 			dateTime TIMESTAMP WITHOUT TIME ZONE NOT NULL,
-			user_id INTEGER FOREIGN KEY(user_id) REFERENCES users(id) 
+			user_id INTEGER,
+			FOREIGN KEY(user_id) REFERENCES users(id) 
 		)
 	`
 
