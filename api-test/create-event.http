@@ -1,10 +1,10 @@
 POST http://localhost:8080/events
 Content-Type: application/json
-Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Im5hdGhhbnRlc3RAZW1haWwuY29tIiwiZXhwIjoxNzA4NjI2NjcyLCJ1c2VySWQiOjB9.NrF3HfKry2U92WvLAl2NPPGnLZL_OPpdgSduGO7OFu8
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3QyQGVtYWlsLmNvbSIsImV4cCI6MTcwODYyOTI2MywidXNlcklkIjozfQ.aMlBJITGWw71OlN92lxt9X3WKVfg_f6yilpAxVpXJiA
 
 {
-    "name":"Nathan Teste 2",
-    "description" : "Teste teste",
+    "name":"Test other event user2",
+    "description" : "!! awdawdeste !!",
     "location": "test location",
     "datetime": "2024-01-01T15:39:00.000Z"
 }
